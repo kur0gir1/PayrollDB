@@ -21,19 +21,19 @@
     session_start();
     include 'database.php';
 
-    $sql = "SELECT * FROM employees"; 
+    $sql = "SELECT * FROM payroll"; 
     $result = mysqli_query(mysql: $conn, query: $sql);
 
     if ($result && mysqli_num_rows($result) > 0) {
         echo "<table class='table table-striped'>";
         echo "<thead>";
         echo "<tr>";
+        echo "<th>Payroll ID</th>";
         echo "<th>Employee ID</th>";
-        echo "<th>First Name</th>";
-        echo "<th>Last Name</th>";
-        echo "<th>Email</th>"; 
-        echo "<th>Contact Number</th>"; 
-        echo "<th>Job Title</th>"; 
+        echo "<th>Salary ID</th>";
+        echo "<th>Gross Pay</th>"; 
+        echo "<th>Net Pay</th>"; 
+        echo "<th>Deductions</th>"; 
         echo "<th>Actions</th>";
         echo "</tr>";
         echo "</thead>";
@@ -41,12 +41,12 @@
 
         while ($row = mysqli_fetch_assoc($result)) {
             echo "<tr>";
+            echo "<td>" . htmlspecialchars($row['PayrollID']) . "</td>";
             echo "<td>" . htmlspecialchars($row['EmployeeID']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['FirstName']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['LastName']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['Email']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['PhoneNumber']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['JobTitle']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['SalaryID']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['GrossPay']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['NetPay']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['DeductionsApplied']) . "</td>";
             echo "<td>" . htmlspecialchars($row['Actions']) . "</td>";
             echo "<td>
                     <a href='edit.php?id=" . htmlspecialchars(string: $row['Actions']) . "' class='btn btn-warning'>Edit</a>
