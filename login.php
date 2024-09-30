@@ -1,13 +1,13 @@
 <?php
 session_start();
-include 'database.php'; // Include your database connection file
+include 'database.php';
 
-$errors = array(); // Initialize an array to hold errors
+$errors = array(); 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Collect form data
-    $loginIdentifier = $_POST["loginIdentifier"] ?? ''; // Username or Email
-    $password = $_POST["password"] ?? ''; // Password
+    $loginIdentifier = $_POST["loginIdentifier"] ?? ''; 
+    $password = $_POST["password"] ?? '';
 
     // Check for empty fields
     if (empty($loginIdentifier) || empty($password)) {
@@ -15,23 +15,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (count($errors) == 0) {
-        // Prepare SQL statement to check user credentials
         $sql = "SELECT * FROM users WHERE email = ? OR username = ?";
         $stmt = mysqli_stmt_init($conn);
         
         if (mysqli_stmt_prepare($stmt, $sql)) {
-            mysqli_stmt_bind_param($stmt, "ss", $loginIdentifier, $loginIdentifier); // Bind the same variable for both email and username
+            mysqli_stmt_bind_param($stmt, "ss", $loginIdentifier, $loginIdentifier);
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);
 
-            // Check if user exists
             if (mysqli_num_rows($result) > 0) {
                 $user = mysqli_fetch_assoc($result);
 
-                // Verify password
-                if (password_verify($password, $user['password'])) {
-                    // If the password is correct, redirect to index.php
-                    $_SESSION['user_id'] = $user['id']; // Store user ID in session
+                if ($password === $user['password']) {
+
+                    $_SESSION['user_email'] = $user['email'];
                     header("Location: index.php");
                     exit();
                 } else {
@@ -44,6 +41,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             array_push($errors, "Database error");
         }
     }
+}
+
+
+foreach ($errors as $error) {
+    echo "<div class='alert alert-danger'>$error</div>";
 }
 ?>
 
@@ -61,7 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
     <div class="row border rounded-5 p-3 bg-white shadow box-area">
 
-        <!-- BlackForge Labs Section -->
         <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #06031f;">
             <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">BlackForge Labs</p>
             <small class="text-white text-wrap text-center" style="width: 17rem; font-family: 'Courier New', Courier, monospace;">
@@ -69,7 +70,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </small>
         </div>
 
-        <!-- Login Form Section -->
         <div class="col-md-6 right-box">
             <div class="row align-items-center">
                 <div class="header-text mb-4">
@@ -101,7 +101,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </form>
 
-                <!-- Display error messages -->
                 <?php if (!empty($errors)): ?>
                     <div class="alert alert-danger">
                         <?php foreach ($errors as $error): ?>
@@ -117,38 +116,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Add the fade-in effect when the page loads
-        document.body.classList.add('fade-in'); // Set initial state to fade-in
+        document.body.classList.add('fade-in'); 
 
-        // Remove the fade-out class after page load to start fade-in animation
         setTimeout(function() {
             document.body.classList.remove('fade-out');
-        }, 10); // Delay by 10ms to let the fade-in effect start after page load
+        }, 10); 
 
-        // Handle form submission
         const form = document.querySelector('form');
         form.addEventListener('submit', function (event) {
-            event.preventDefault();  // Prevent default form submission
+            event.preventDefault();  
 
-            document.body.classList.add('fade-out', 'active');  // Add fade-out class to body
+            document.body.classList.add('fade-out', 'active'); 
 
-            // Delay the actual form submission by 500ms (matching the CSS transition time)
             setTimeout(function () {
                 form.submit();
             }, 500);
         });
 
-        // Handle anchor links (like "Forgot Password?" or "Sign Up")
         const links = document.querySelectorAll('a');
         links.forEach(function (link) {
             link.addEventListener('click', function (event) {
-                event.preventDefault();  // Prevent instant navigation
+                event.preventDefault(); 
 
-                const href = link.getAttribute('href');  // Get the target URL
+                const href = link.getAttribute('href');  
                 if (href) {
-                    document.body.classList.add('fade-out', 'active');  // Add fade-out class to body
-
-                    // Delay the actual page navigation by 500ms (matching the CSS transition time)
+                    document.body.classList.add('fade-out', 'active'); 
                     setTimeout(function () {
                         window.location.href = href;
                     }, 500);

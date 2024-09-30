@@ -5,19 +5,14 @@ body{
     background: #06031f;
 }
 
-/*------------ Login container ------------*/
-
 .box-area{
     width: 930px;
 }
-
-/*------------ Right box ------------*/
 
 .right-box{
     padding: 40px 30px 40px 40px;
 }
 
-/*------------ Custom Placeholder ------------*/
 
 ::placeholder{
     font-size: 14px;
@@ -33,7 +28,7 @@ body{
 .custom-btn {
   background-color: #06031f;
   border-color: #06031f;
-  color: white; /* Optional: Change text color for better contrast */
+  color: white;
 }
 
 .custom-btn:hover{
@@ -42,8 +37,6 @@ body{
   opacity: .9;
 }
 
-/* Style for fade-out effect */
-/* Style for fade-in and fade-out effect */
 .fade-out {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
@@ -61,9 +54,6 @@ body{
 .fade-out.active {
   opacity: 0;
 }
-
-
-/*------------ For small screens------------*/
 
 @media only screen and (max-width: 768px){
 

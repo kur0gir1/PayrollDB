@@ -30,7 +30,6 @@ if (isset($_POST["submit"])) {
       array_push($errors, "You must accept the terms and conditions");
   }
 
-  // Continue with existing checks for duplicate emails and registration logic
   require_once "database.php";
   $sql = "SELECT * FROM users WHERE email = ?";
   $stmt = mysqli_stmt_init($conn);
@@ -44,9 +43,8 @@ if (isset($_POST["submit"])) {
       }
   }
 
-  // If no errors, proceed with registration
   if (count($errors) == 0) {
-      // Remove password hashing
+
       $sql = "INSERT INTO users (username, email, password, terms) VALUES (?, ?, ?, ?)";
       $stmt = mysqli_stmt_init($conn);
       if (mysqli_stmt_prepare($stmt, $sql)) {
@@ -58,7 +56,6 @@ if (isset($_POST["submit"])) {
           die("Something went wrong");
       }
   } else {
-      // Display errors
       foreach ($errors as $error) {
           echo "<div class='alert alert-danger'>$error</div>";
       }
@@ -89,7 +86,7 @@ if (isset($_POST["submit"])) {
             <p>Create your account to get started.</p>
           </div>
 
-          <form action="register.php" method="POST"> <!-- Changed method to POST -->
+          <form action="register.php" method="POST">
             <div class="input-group mb-3">
               <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Username" name="username" required>
             </div>
@@ -118,7 +115,6 @@ if (isset($_POST["submit"])) {
         </div>
       </div>
 
-      <!-- BlackForge Labs Section -->
       <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #06031f;">
         <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">BlackForge Labs</p>
         <small class="text-white text-wrap text-center" style="width: 17rem; font-family: 'Courier New', Courier, monospace;">
@@ -130,36 +126,29 @@ if (isset($_POST["submit"])) {
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Add the fade-in effect when the page loads
-      document.body.classList.add('fade-in'); // Set initial state to fade-in
 
-      // Remove the fade-out class after page load to start fade-in animation
+      document.body.classList.add('fade-in'); 
+
       setTimeout(function () {
         document.body.classList.remove('fade-out');
-      }, 10); // Delay by 10ms to let the fade-in effect start after page load
+      }, 10); 
 
-      // Handle form submission
       const form = document.querySelector('form');
       form.addEventListener('submit', function (event) {
-        document.body.classList.add('fade-out', 'active');  // Add fade-out class to body
+        document.body.classList.add('fade-out', 'active');  
 
-        // Delay the actual form submission by 500ms (matching the CSS transition time)
         setTimeout(function () {
           form.submit();
         }, 500);
       });
 
-      // Handle anchor links (like "Log In")
       const links = document.querySelectorAll('a');
       links.forEach(function (link) {
         link.addEventListener('click', function (event) {
-          event.preventDefault();  // Prevent instant navigation
+          event.preventDefault(); 
+          const href = link.getAttribute('href');  
+            document.body.classList.add('fade-out', 'active');  
 
-          const href = link.getAttribute('href');  // Get the target URL
-          if (href) {
-            document.body.classList.add('fade-out', 'active');  // Add fade-out class to body
-
-            // Delay the actual page navigation by 500ms (matching the CSS transition time)
             setTimeout(function () {
               window.location.href = href;
             }, 500);
