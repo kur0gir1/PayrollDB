@@ -23,6 +23,12 @@ if (isset($_GET['employeeID'])) {
     exit;
 }
 
+$username = '';
+if (isset($_SESSION['username'])) {
+    $username = htmlspecialchars($_SESSION['username']); // Get the username safely
+}
+
+
 // Handle form submission for updating employee details
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $firstName = mysqli_real_escape_string($conn, $_POST['first_name']);
@@ -145,6 +151,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="container-fluid bg-dark text-white">
   <div class="container mt-5 bg-dark text-light p-4 rounded">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="mb-0">BlockForge Labs</h2>
+      <div>
+        <span class="me-3">Welcome, <?php echo $username ?: 'Guest'; ?>!</span>
+        <a href="login.php" class="btn btn-outline-light">Logout</a> <!-- Change to logout.php -->
+      </div>
+    </div>
     <h1 class="text-center">Edit Employee</h1>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-black justify-content-center mb-4">

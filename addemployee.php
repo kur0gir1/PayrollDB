@@ -1,3 +1,12 @@
+<?php
+session_start();
+include 'database.php';
+
+$username = '';
+if (isset($_SESSION['username'])) {
+    $username = htmlspecialchars($_SESSION['username']); // Get the username safely
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +17,13 @@
 </head>
 <body class="container-fluid bg-dark text-white">
   <div class="container mt-5 bg-dark text-light p-4 rounded">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="mb-0">BlockForge Labs</h2>
+      <div>
+        <span class="me-3">Welcome, <?php echo $username ?: 'Guest'; ?>!</span>
+        <a href="login.php" class="btn btn-outline-light">Logout</a> <!-- Change to logout.php -->
+      </div>
+    </div>
     <h1 class="text-center">Add Employee</h1>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-black justify-content-center mb-4">
@@ -15,12 +31,11 @@
         <li class="nav-item"><a href="index.php" class="nav-link text-light">Employees Table</a></li>
         <li class="nav-item"><a href="departments.php" class="nav-link text-light">Departments Table</a></li>
         <li class="nav-item"><a href="payroll.php" class="nav-link text-light">Payroll Table</a></li>
-        <li class="nav-item"><a href="addemployee.php" class="nav-link text-light active btn btn-success">Add Employees</a></li>
+        <li class="nav-item"><a href="addemployee.php" class="nav-link text-light active btn btn-success">Add Employee</a></li>
       </ul>
     </nav>
 
     <?php
-    session_start();
     include 'database.php';
 
     // Handle form submission

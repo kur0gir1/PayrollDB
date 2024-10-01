@@ -115,7 +115,7 @@ if (isset($_POST["submit"])) {
       </div>
 
       <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #06031f;">
-        <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">BlackForge Labs</p>
+        <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">BlockForge Labs</p>
         <small class="text-white text-wrap text-center" style="width: 17rem; font-family: 'Courier New', Courier, monospace;">
           Forging the Future of Blockchain Innovation!
         </small>
@@ -143,7 +143,7 @@ if (isset($_POST["submit"])) {
 
       const links = document.querySelectorAll('a');
       links.forEach(function (link) {
-        link.addEventListener('click', function (event) {
+        link.addEventListener('click', function (event){
           event.preventDefault(); 
           const href = link.getAttribute('href');  
             document.body.classList.add('fade-out', 'active');  
@@ -151,10 +151,9 @@ if (isset($_POST["submit"])) {
             setTimeout(function () {
               window.location.href = href;
             }, 500);
-          }
+          });
         });
       });
-    });
   </script>
 </body>
 

@@ -1,3 +1,13 @@
+<?php
+session_start();
+include 'database.php';
+
+$username = '';
+if (isset($_SESSION['username'])) {
+    $username = htmlspecialchars($_SESSION['username']); // Get the username safely
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +18,14 @@
 </head>
 <body class="container-fluid bg-dark text-white">
   <div class="container mt-5 bg-dark text-light p-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="mb-0">BlockForge Labs</h2>
+      <div>
+        <span class="me-3">Welcome, <?php echo $username ?: 'Guest'; ?>!</span>
+        <a href="login.php" class="btn btn-outline-light">Logout</a> <!-- Change to logout.php -->
+      </div>
+    </div>
+
     <h1 class="text-center">Payroll Table</h1>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-black justify-content-center">
@@ -15,12 +33,11 @@
         <li class="nav-item"><a href="index.php" class="nav-link text-light">Employees Table</a></li>
         <li class="nav-item"><a href="departments.php" class="nav-link text-light">Departments Table</a></li>
         <li class="nav-item"><a href="payroll.php" class="nav-link text-light active">Payroll Table</a></li>
-        <li class="nav-item"><a href="addemployee.php" class="nav-link text-light active btn btn-success">Add Employees</a></li>
+        <li class="nav-item"><a href="addemployee.php" class="nav-link text-light active btn btn-success">Add Employee</a></li>
       </ul>
     </nav>
 
     <?php
-    session_start();
     include 'database.php';
 
     // Determine sorting order
@@ -58,7 +75,8 @@
             echo "<td>" . htmlspecialchars($row['NetPay']) . "</td>";
             echo "<td>
                     <a href='edit.php?employeeID=" . htmlspecialchars($row['EmployeeID']) . "' class='btn btn-warning btn-sm'>Edit</a>
-                    <a href='delete.php?id=" . htmlspecialchars($row['PayrollID']) . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Are you sure you want to delete this record?\");'>Delete</a>
+                    <a href='delete.php?employeeID=" . htmlspecialchars($row['EmployeeID']) . "&payrollID=" . htmlspecialchars($row['PayrollID']) . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Are you sure you want to delete this employee and their payroll record?\");'>Delete</a>
+
                   </td>";
             echo "</tr>";
         }

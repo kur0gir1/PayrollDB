@@ -26,9 +26,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (mysqli_num_rows($result) > 0) {
                 $user = mysqli_fetch_assoc($result);
 
-                if ($password === $user['password']) {
-
+                // Check if the provided password matches the stored password
+                if ($password === $user['password']) { // Direct comparison
                     $_SESSION['user_email'] = $user['email'];
+                    $_SESSION['username'] = $user['username']; // Store the username in session
                     header("Location: index.php");
                     exit();
                 } else {
@@ -41,11 +42,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             array_push($errors, "Database error");
         }
     }
-}
 
-
-foreach ($errors as $error) {
-    echo "<div class='alert alert-danger'>$error</div>";
+    foreach ($errors as $error) {
+        echo "<div class='alert alert-danger'>$error</div>";
+    }
 }
 ?>
 
@@ -64,7 +64,7 @@ foreach ($errors as $error) {
     <div class="row border rounded-5 p-3 bg-white shadow box-area">
 
         <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #06031f;">
-            <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">BlackForge Labs</p>
+            <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">BlockForge Labs</p>
             <small class="text-white text-wrap text-center" style="width: 17rem; font-family: 'Courier New', Courier, monospace;">
                 Forging the Future of Blockchain Innovation!
             </small>
