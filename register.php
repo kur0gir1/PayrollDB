@@ -78,7 +78,6 @@ if (isset($_POST["submit"])) {
 <body class="bg-black fade-out">
   <div class="container d-flex justify-content-center align-items-center min-vh-100">
     <div class="row border rounded-5 p-3 bg-white shadow box-area">
-      <!-- Registration Form Section -->
       <div class="col-md-6 right-box">
         <div class="row align-items-center">
           <div class="header-text mb-4">
